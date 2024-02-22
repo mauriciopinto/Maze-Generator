@@ -1,0 +1,9 @@
+#maze-container {
+	width: auto;
+	margin: 16px 0px;
+}
+
+.maze-tile {
+	height: 40px !important;
+	box-sizing: border-box;
+}

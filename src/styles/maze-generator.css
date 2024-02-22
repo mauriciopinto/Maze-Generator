@@ -1,0 +1,27 @@
+#main-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#maze-generator-form-table td {
+	padding: 0px 8px 0px 0px;
+}
+
+.maze-gen-input {
+	font-family: "Silkscreen", sans-serif;
+	border: solid 4px;
+	padding: 4px;
+}
+
+.maze-gen-button {
+	font-family: "Silkscreen", sans-serif;
+	border: solid 4px;
+	padding: 4px;
+	cursor: pointer;
+}
+
+.maze-gen-button:active {
+	background-color: gainsboro;
+}
