@@ -5,7 +5,7 @@ This is a small side project I did for fun. I was wondering about how graph theo
 ## How the mazes are generated
 
 I wrote the algorithm before I looked at the theory behind mazes, so I might have taken an unconventional approach. The idea is to first generate a fully connected graph, where each vertex represents a tile in the final maze. They are fully connected because the algorithm will then start removing edges one by one until no more are available. So, it starts looking like:
-![Fully connected maze graph](/public/readme/FC Graph.png  "Fully connected maze graph")
+![Fully connected maze graph](public/readme/FC Graph.png  "Fully connected maze graph")
 
 Which translates into a maze that looks like:
 ![Fully connected maze](./public/readme/FC Graph Maze.png  "Fully connected maze")
