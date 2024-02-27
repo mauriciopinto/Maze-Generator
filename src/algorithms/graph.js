@@ -18,12 +18,13 @@ export function generateFCGraph (dimensions) {
 		graph[i] = [-1, -1, -1, -1];
 	}
 	
-	/* Draw horizontal (right) and vertical (down) edges.
-		Edges are represented by an integer number, where:
-		0 = no edges
-		1 = one edge connecting to the vertex to the right
-		2 = one edge connecting to the downward vertex
-		3 = both edges */
+	/* Draw edges. Edges are represented by numbers,
+		which contain the vertex that it connects to. Each
+		vertex has 4 edges:
+		0 = edge to the vertex to the right
+		1 = edge to the vertex directly down
+		2 = edge to the vertex to the left
+		3 = edge to the vertex directly up */
 	for (let i = 0; i < nTiles; i++) {
 		/* No horizontal edges on the last column */
 		if (i % dimensions !== dimensions - 1) {
