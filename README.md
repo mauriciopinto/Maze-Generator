@@ -5,13 +5,13 @@ This is a small side project I did for fun. I was wondering about how graph theo
 ## How the mazes are generated
 
 I wrote the algorithm before I looked at the theory behind mazes, so I might have taken an unconventional approach. The idea is to first generate a fully connected graph, where each vertex represents a tile in the final maze. They are fully connected because the algorithm will then start removing edges one by one until no more are available. So, it starts looking like:
-![Fully connected maze graph](public/readme/FC Graph.png  "Fully connected maze graph")
+![Fully connected maze graph](public/readme/FC-Graph.png  "Fully connected maze graph")
 
 Which translates into a maze that looks like:
-![Fully connected maze](public/readme/FC Graph Maze.png  "Fully connected maze")
+![Fully connected maze](public/readme/FC-Graph-Maze.png  "Fully connected maze")
 
 This is because edges in the graph represent connections between tiles, or to put it differently, the lack of an edge represents a wall in the maze. So if we proceed to remove some edges, the graph and maze would change accordingly:
-![Not fully connected graph](public/readme/Non FC Graph.png  "Not fully connected graph") ![Not fully connected maze](public/readme/Non FC Graph Maze.png  "Not fully connected maze")
+![Not fully connected graph](public/readme/Non-FC-Graph.png  "Not fully connected graph") ![Not fully connected maze](public/readme/Non-FC-Graph-Maze.png  "Not fully connected maze")
 
 The algorithm creates a list of available edges to remove (which initially contains all edges) and does the following in each step until there are no more available edges:
 
