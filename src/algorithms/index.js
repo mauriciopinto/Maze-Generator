@@ -21,8 +21,9 @@ export function generateMaze (dimensions, algorithm) {
 	return maze;
 }
 
+/* Algorithm that removes random edges */
 function generateStandardMaze (dimensions) {
-	let idx, idxValue, vertex, edgeIdx, edgeVertex;
+	let idx, edge, vertex, direction, edgeVertex;
 	const edges = generateFCGraph (dimensions);
 	const availableEdges = new Array (2 * dimensions * dimensions - 2 * dimensions);
 
@@ -31,43 +32,46 @@ function generateStandardMaze (dimensions) {
 	while (availableEdges.length > 0) {
 		/* Select a random edge */
 		idx = Math.floor (Math.random () * availableEdges.length);
-		idxValue = availableEdges[idx];
+		edge = availableEdges[idx];
 
-		/* Remove edge */
-		vertex = Math.floor ((idxValue + Math.floor (idxValue / (dimensions * 2 - 1))) / 2);
+		/* Calculate idx of the vertex */
+		vertex = Math.floor ((edge + Math.floor (edge / (dimensions * 2 - 1))) / 2);
 
 		/* Formula for calculating the vertex is slightly different on last row */
-		if (idxValue >= (2 * dimensions - 1) * (dimensions - 1)) {
-			vertex = (dimensions * (dimensions - 1)) + (idxValue - ((2 * dimensions - 1) * (dimensions - 1)));
+		if (edge >= (2 * dimensions - 1) * (dimensions - 1)) {
+			vertex = (dimensions * (dimensions - 1)) + (edge - ((2 * dimensions - 1) * (dimensions - 1)));
 		}
 
-		edgeIdx = ((idxValue % 2) + (Math.floor (idxValue / (dimensions * 2 - 1)) % 2)) % 2;
+		/* Calculate the direction of the edge */
+		direction = ((edge % 2) + (Math.floor (edge / (dimensions * 2 - 1)) % 2)) % 2;
 
 		/* If vertex is at last row or last column, only one direction is available */
 		if (vertex % dimensions === dimensions - 1) {
-			edgeIdx = DOWN;
+			direction = DOWN;
 		} else if (vertex >= dimensions * (dimensions - 1)) {
-			edgeIdx = RIGHT;
+			direction = RIGHT;
 		}
 
-		edgeVertex = edges[vertex][edgeIdx];
+		edgeVertex = edges[vertex][direction];
 		
+		/* If there is no edge in the direction, remove it and move to next iteration */
 		if (edgeVertex === -1) {
 			availableEdges.splice (idx, 1);
 			continue;
 		}
 
-		edges[vertex][edgeIdx] = -1;
-		edges[edgeVertex][(edgeIdx + 2) % 4] = -1;
+		/* Logically remove the edge */
+		edges[vertex][direction] = -1;
+		edges[edgeVertex][(direction + 2) % 4] = -1;
 		
 		/* If removing the edge made the graph bipartite */
 		if (!bfs (edges, 0)) {
-			console.log ("undoing removal of " + idxValue);
 			/* Undo remove of last edge */
-			edges[vertex][edgeIdx] = edgeVertex;
-			edges[edgeVertex][(edgeIdx + 2) % 4] = vertex;
+			edges[vertex][direction] = edgeVertex;
+			edges[edgeVertex][(direction + 2) % 4] = vertex;
 		}
 
+		/* Physically remove the edge from list of available edges */
 		availableEdges.splice (idx, 1);
 	}
 
@@ -76,11 +80,16 @@ function generateStandardMaze (dimensions) {
 	return edges;
 }
 
+/* Algorithm that removes edges giving priority to high-degree vertices */
 function generateMazeNoCrossroads (dimensions) {
+	let idxInDegreeList, edge, vertex, edgeIdx;
 	const edges = generateFCGraph (dimensions);
-	let maxDegree = 3;
+	
+	/* Create 4 lists, one for each degree */
 	let verticesByDegree = [[], [], [], []];
+	let maxDegree = 3;
 
+	/* Populate the degree lists with vertices */
 	for (let i in edges) {
 		const degree = (+(edges[i][RIGHT] >= 0) + (edges[i][DOWN] >= 0) + (edges[i][LEFT] >= 0) + (edges[i][UP] >= 0)) - 1;
 
@@ -91,11 +100,12 @@ function generateMazeNoCrossroads (dimensions) {
 		});
 	}
 
+	/* While there are vertices with available edges: */
 	while (verticesByDegree.length > 0) {
-		const idxInDegreeList = Math.floor (Math.random () * verticesByDegree[maxDegree].length);
-		const vertex = verticesByDegree[maxDegree][idxInDegreeList];
-		const edgeIdx = Math.floor (Math.random () * vertex.edges.length);
-		const edge = vertex.edges[edgeIdx];
+		idxInDegreeList = Math.floor (Math.random () * verticesByDegree[maxDegree].length);
+		vertex = verticesByDegree[maxDegree][idxInDegreeList];
+		edgeIdx = Math.floor (Math.random () * vertex.edges.length);
+		edge = vertex.edges[edgeIdx];
 
 		/* Attempt to remove edge */
 		edges[vertex.idx][edge.direction] = -1;
@@ -108,17 +118,19 @@ function generateMazeNoCrossroads (dimensions) {
 			vertex.degree++;
 		}
 
-		/* Remove from list of removable edges */
+		/* Remove from vertex's edges */
 		vertex.edges.splice (edgeIdx, 1);
 		vertex.degree--;
 
 		/* Relocate vertex according to degree */
 		verticesByDegree[maxDegree].splice (idxInDegreeList, 1);
 		
+		/* If the vertex has no more available edges, delete it */
 		if (vertex.edges.length > 0) {
 			verticesByDegree[vertex.degree].push (vertex);
 		}
 		
+		/* If removing the vertex made the list empty, delete the list and reduce maxDegree */
 		if (verticesByDegree[maxDegree].length === 0) {
 			verticesByDegree.splice (maxDegree, 1);
 			maxDegree--;

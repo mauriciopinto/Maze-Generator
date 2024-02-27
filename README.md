@@ -28,13 +28,13 @@ After this, we end up with a **Perfect Maze**. This is because of two properties
 - The graph has no loops, which means that there is only exactly one way to traverse from any point `A` to any point `B` without repeating vertices. This is also true because we don't stop removing edges until there are none available. The existence of a loop would mean that there is at least one edge that still be removed without making the graph bipartite.
 
 ### Selecting edges from vertices with highest degree
-I wrote this algorithm because I noticed that my [first algorithm](#selecting-random-edges) was generating mazes with some tiles having connections to their four adjacent vertices (right, down, left and up). I wanted to avoid this because it seemed to me that it made mazes easier to solve. As a solution to this, I came up with the following solution:
+I wrote this algorithm because I noticed that my [first algorithm](#selecting-random-edges) was generating mazes with some tiles having connections to their four adjacent vertices (right, down, left and up). I wanted to avoid this because it seemed to me that it made mazes easier to solve. As a solution to this, I came up with the following procedure:
 
 - Calculate the degree of each vertex
 
 - Make a list of each degree (1, 2, 3 and 4) and add the vertices with degree `X` to list `X`. This lists contain copies of each vertex.
 
-- Assign a value of highest degree. This will always be `4`` since at least one vertex will be connected to all four adjacent vertices.
+- Assign a value of highest degree. This will always be `4` since at least one vertex will be connected to all four adjacent vertices.
 
 - While there are vertices with available edges:
 	- Pick a random vertex from the list of highest degree
