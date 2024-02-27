@@ -43,9 +43,12 @@ I wrote this algorithm because I noticed that my [first algorithm](#selecting-ra
 
 	- Remove the edge and check if this makes the graph bipartite
 		- If it does make the graph bipartite, undo the removal of the edge
-		
+
 	- Remove the edge from the vertex in the degree list.
 		- If this makes the list of edges in the vertex empty, remove the vertex from the degree list.
 			- If this makes the degree list empty, remove the degree list and decrease the highest degree value.
 	
 After this, we end up with a perfect maze that has no tiles with 4 connections, because all of the vertices of degree 4 will always be selected first for edge removal.
+
+## Previews
+![Maze generated with algorithm 1](public/readme/preview-1.png)

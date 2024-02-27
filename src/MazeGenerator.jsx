@@ -31,8 +31,8 @@ const MazeGenerator = () => {
 								<td><label htmlFor="algorithm">Select algorithm</label></td>
 								<td>
 									<select value={algorithm} name="algorithm" className="maze-gen-input" onChange={(e) => setAlgorithm (e.target.value)}>
-										<option value={1}>Remove random edges</option>
-										<option value={2}>Remove edges of highest degree vertices</option>
+										<option value={1}>Random walls</option>
+										<option value={2}>Random walls by highest degree</option>
 									</select>
 								</td>
 							</tr>
