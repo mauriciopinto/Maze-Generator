@@ -51,4 +51,4 @@ I wrote this algorithm because I noticed that my [first algorithm](#selecting-ra
 After this, we end up with a perfect maze that has no tiles with 4 connections, because all of the vertices of degree 4 will always be selected first for edge removal.
 
 ## Previews
-![Maze generated with algorithm 1](public/readme/preview-1.png)
+![Maze generated with algorithm 1](public/readme/preview.gif)
