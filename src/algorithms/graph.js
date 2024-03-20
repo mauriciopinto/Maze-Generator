@@ -71,3 +71,45 @@ export function bfs (edges, start) {
 
 	return notBipartite;
 }
+
+function fw (edges) {
+	const nVertices = edges.length;
+	let distances = new Array (nVertices * nVertices);
+	let i, j, k;
+	
+	for (i = 0; i < nVertices; i++) {
+		for (j = 0; j < nVertices; j++) {
+			const index = i * nVertices + j;
+			if (i === j) distances[index] = 0;
+			else if (edges[i].includes (j)) distances[index] = 1;
+			else distances[index] = Number.MAX_SAFE_INTEGER;
+		}
+	}
+
+	for (k = 0; k < nVertices; k++) {
+		for (i = 0; i < nVertices; i++) {
+			for (j = 0; j < nVertices; j++) {
+				const index = i * nVertices + j;
+				distances[index] = Math.min (distances[index], distances[i * nVertices + k] + distances[k * nVertices + j]);
+			}
+		}
+	}
+
+	return distances;
+}
+
+export function getLongestPath (edges) {
+	const distances = fw (edges);
+	const nVertices = edges.length;
+
+	let maxIdx = 0;
+
+	for (let i = 0; i < distances.length; i++) {
+		if (distances[i] > distances[maxIdx]) maxIdx = i;
+	}
+
+	const row = Math.floor (maxIdx / nVertices);
+	const column = maxIdx % nVertices;
+
+	return [row, column];
+}

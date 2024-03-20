@@ -1,9 +1,23 @@
 #maze-container {
 	width: auto;
 	margin: 16px 0px;
+	position: relative;
 }
 
 .maze-tile {
 	height: 40px !important;
 	box-sizing: border-box;
+}
+
+.maze-loader {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: white;
 }

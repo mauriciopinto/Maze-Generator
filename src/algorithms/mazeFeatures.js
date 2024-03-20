@@ -1,3 +1,5 @@
+import { getLongestPath } from "./graph";
+
 export const RIGHT = 0;
 export const DOWN = 1;
 export const LEFT = 2;
@@ -95,4 +97,13 @@ export function createEntranceAndExit (dimensions, edges) {
 
 			break;
 	}
+}
+
+export function spawnMouseAndCheese (dimensions, edges) {
+	let [row, column] = getLongestPath (edges);
+
+	return {
+		mouse: row,
+		cheese: column
+	};
 }

@@ -1,8 +1,9 @@
 import { generateFCGraph, bfs } from "./graph"
-import { createEntranceAndExit, RIGHT, DOWN, LEFT, UP } from "./mazeFeatures";
+import { createEntranceAndExit, RIGHT, DOWN, LEFT, UP, spawnMouseAndCheese } from "./mazeFeatures";
 
-export function generateMaze (dimensions, algorithm) {
+export async function generateMaze (dimensions, algorithm, mode) {
 	let maze;
+	let elements = {};
 
 	switch (algorithm) {
 		case 1:
@@ -18,7 +19,21 @@ export function generateMaze (dimensions, algorithm) {
 			break;
 	}
 
-	return maze;
+	switch (mode) {
+		case 1:
+			createEntranceAndExit (dimensions, maze);
+			break;
+		
+		case 2:
+			elements = spawnMouseAndCheese (dimensions, maze);
+			break;
+
+		default:
+			createEntranceAndExit (dimensions, maze);
+			break;
+	}
+
+	return [maze, elements];
 }
 
 /* Algorithm that removes random edges */
@@ -74,8 +89,6 @@ function generateStandardMaze (dimensions) {
 		/* Physically remove the edge from list of available edges */
 		availableEdges.splice (idx, 1);
 	}
-
-	createEntranceAndExit (dimensions, edges);
 
 	return edges;
 }
@@ -136,8 +149,6 @@ function generateMazeNoCrossroads (dimensions) {
 			maxDegree--;
 		}
 	}
-
-	createEntranceAndExit (dimensions, edges);
 
 	return edges;
 }
