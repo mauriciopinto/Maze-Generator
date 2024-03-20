@@ -4,7 +4,7 @@ This is a small side project I did for fun. I was wondering about how graph theo
 
 ## How to run
 
-I've run it on a bunch of `node` versions posterior to `v16` (including `v16.13.2`, `18.17.1` and `20.11.1`) without issues. In order to run just clone this repository:
+I've run it on a bunch of `node` versions posterior to `v16` (including `v16.13.2`, `v18.17.1` and `v20.11.1`) without issues. In order to run just clone this repository:
 
 ```
 $ git clone https://github.com/mauriciopinto/Maze-Generator.git
