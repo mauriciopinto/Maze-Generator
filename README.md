@@ -1,6 +1,28 @@
 # Maze Generator
 
-This is a small side project I did for fun. I was wondering about how graph theory is applied to mazes, and started tinkering with some of the basic graph concepts and algorithms. I made it with **React** and plain CSS to add a bit of style.
+This is a small side project I did for fun. I was wondering about how graph theory is applied to mazes, and started tinkering with some of the basic graph concepts and algorithms. I made it with **Vite**, **React** and plain CSS to add a bit of style.
+
+## How to run
+
+I've run it on a bunch of `node` versions posterior to `v16` (including `v16.13.2`, `18.17.1` and `20.11.1`) without issues. In order to run just clone this repository:
+
+```
+$ git clone https://github.com/mauriciopinto/Maze-Generator.git
+```
+
+and install dependencies via npm:
+
+```
+$ npm install
+```
+
+then, run with:
+
+```
+$ npm run dev
+```
+
+After this, the app should be available at [localhost:5173](http://localhost:5173)
 
 ## How the mazes are generated
 I wrote the following two algorithms before I looked at the theory behind mazes, so I might have taken an unconventional (and suboptimal) approach. In both idea is to first generate a fully connected graph, where each vertex represents a tile in the final maze. They are fully connected because the algorithm will then start removing edges one by one until no more are available. So, it starts looking like the image to the right, which translates to a maze that looks like the image to the left:
