@@ -103,7 +103,7 @@ function generateMazeNoCrossroads (dimensions) {
 	let maxDegree = 3;
 
 	/* Populate the degree lists with vertices */
-	for (let i in edges) {
+	for (let i = 0; i < edges.length; i++) {
 		const degree = (+(edges[i][RIGHT] >= 0) + (edges[i][DOWN] >= 0) + (edges[i][LEFT] >= 0) + (edges[i][UP] >= 0)) - 1;
 
 		verticesByDegree[degree].push ({
